@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
@@ -13,18 +13,41 @@ export default class App extends React.Component {
     );
   }
 }
- 
-const TabNavigator = createBottomTabNavigator({
-  Write: { screen: WriteScreen },
-  Read: { screen: ReadScreen },
-});
+
+const TabNavigator = createBottomTabNavigator(
+  {
+    Read: { screen: ReadScreen },
+    Write: { screen: WriteScreen },
+  },
+  {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ }) => {
+        const routeName = navigation.state.routeName
+        if (routeName === 'Write') {
+          return (
+            <Image
+              source={require('./assets/writer_logo.png')}
+              style={{ width: 40, height: 40 }} />
+          )
+        }
+        else if (routeName === 'Read') {
+          return (
+            <Image
+              source={require('./assets/reader_logo.png')}
+              style={{ width: 40, height: 40 }} />
+          )
+        }
+      }
+    })
+  }
+
+);
 const AppContainer = createAppContainer(TabNavigator);
-/*
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
+    backgroundColor: '#808080',
     justifyContent: 'center',
   },
-});*/
+});
